@@ -5,7 +5,7 @@ $this->headScript()->appendFile($this->basePath() . '/js/banner.js');
 $this->headScript()->appendFile($this->basePath() . '/js/script.js');
 
 
-$preview_query = $ispreview == true ? "?ispreview=true" : "";
+$preview_query = $ispreview == true ? "?ispreview=true" : ""; 
 
 if ($ispreview == true):
 	$ad_campaign_id = $campaignpreviewid;
