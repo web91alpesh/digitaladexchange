@@ -1,4 +1,7 @@
 <?php
+$this->headScript()->appendFile($this->basePath() . '/js/3rdparty/jquery-ui-1.9.2.custom.min.js');
+$this->headLink()->appendStylesheet($this->basePath() . '/css/jquery-ui/smoothness/jquery-ui-1.9.2.custom.min.css');
+$this->headScript()->appendFile($this->basePath() . '/js/banner.js');
 $this->headScript()->prependFile($this->basePath() . '/js/script.js');
 
 $preview_query = $ispreview == true ? "?ispreview=true" : "";
@@ -8,8 +11,46 @@ if ($ispreview == true):
 else:
 	$ad_campaign_id = $campaign_id;
 endif;
-
+$enddate = date('m/d/Y', time() + (86400 * 30));
+$minEndDate = explode("/", $enddate);
 ?>
+<?php $this->headScript()->captureStart() ?>
+
+$(function() {
+	$( "#startdate" ).datepicker(
+	{
+		changeMonth: true,
+		changeYear: true,
+		showOtherMonths: true,
+        selectOtherMonths: false,
+        yearRange: "-1:+6",
+	    onSelect: function(date){
+	        var selectedDate = new Date(date);
+	        var msecsInADay = 86400000;
+	        var endDate = new Date(selectedDate.getTime() + msecsInADay);
+	        $("#enddate").datepicker( "option", "minDate", endDate );
+	    }
+	});
+	
+	$( '#startdateicon' ).click(function() {
+          $('#startdate').datepicker('show');
+    });
+    
+    $( "#enddate" ).datepicker(
+	{
+		changeMonth: true,
+		changeYear: true,
+		showOtherMonths: true,
+        selectOtherMonths: false,
+        yearRange: "-1:+6",
+        minDate:new Date(<?php echo $minEndDate[2];?>,<?php echo $minEndDate[0];?>,<?php echo $minEndDate[1];?>)
+	});
+	
+	$( '#enddateicon' ).click(function() {
+          $('#enddate').datepicker('show');
+    });
+});
+<?php $this->headScript()->captureEnd();  ?>
 <div class="steps-container step1">
 <ul class="breadcrumb breadcrumb-heading">
     <li><a href="/demand/<?php echo $preview_query; ?>">Ad Campaigns</a><span class="divider">/</span></li>
@@ -88,6 +129,7 @@ endif;
            </td>
            <td>
             <a href="/demand/editbanner/<?php echo $banner_id; ?><?php echo $preview_query; ?>"><?php echo $edit; ?></a>
+            <!--<a href="javascript:void(0);" onclick="AddBannerModal('/demand/editbanner/<?php echo $banner_id; ?><?php echo $preview_query; ?>');"><?php echo $edit; ?></a>-->
             <hr />
             
             <a href="javascript:void(0);" onclick="deleteBannerModal('/demand/deletebanner/<?php echo $banner_id;?><?php echo $preview_query;?>','<?php echo $rtb_banner->Name;?>');">Delete Banner</a>
@@ -183,4 +225,27 @@ endif;
   </div>
 </div>
 <!-- Delivery Filter Delete Modal -->
+
+
+<!-- CREATE OR EDIT BANNER MODAL START-->
+<div class="modal fade" id="AddBannerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">EDIT BANNER</h4>
+      </div>
+      <div class="modal-body">
+      	<div id="cdn_form_msg" class="alert alert-error" style="margin: 5px; display: none;"></div>
+		<form id="bannerform" name="bannerform" method="POST" action="/demand/newbanner">
+      </div>
+      <div class="modal-footer">
+      <input type="submit" class="btn btn-primary" name="B1" value="Create New Banner" />
+      <!--<button type="button" data-loading-text="Processing..." id="delivery_filter_yes_btn" class="btn btn-primary" onclick="deleteDeliveryFilterConfirm();">Yes</button>-->
+      <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- CREATE OR EDIT BANNER MODAL END-->
 

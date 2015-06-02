@@ -6,10 +6,9 @@
  * @license GPLv3
  */
 
-var adserver_domain = 'server.nginad.com';
+var adserver_domain = 'digitalmedia.exchange';
 var script_name = 'nginad.js';
 var delivery_path = '/delivery/impress';
-
 var quality_scoring_pixels = [                   
 	// QS SERVICE 1
 	// "http://myqualityscore1.com/server/pixel.htm?uid=user_id", 	

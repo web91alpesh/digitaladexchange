@@ -57,10 +57,9 @@ class Module implements AutoloaderProviderInterface
         else:
         
         	$zfcrbac_exception = $serviceManager->get('ZfcRbac\View\Strategy\RedirectStrategy'); // This displays the login page.
-        endif;
-        $eventManager ->attach(
-            $zfcrbac_exception
-        );
+        
+		endif;
+        $eventManager ->attach($zfcrbac_exception);
 
         // TODO: Find out what does this do?
         $moduleRouteListener = new ModuleRouteListener();
@@ -144,7 +143,7 @@ class Module implements AutoloaderProviderInterface
     						
     						// If debugging is set, output the debugging data.
     						// NOTE: Verbose may break browser session handling!
-    						if($sm->get('config')['system']['debug']):
+							if($sm->get('config')['system']['debug']):
     						
     						  echo "\n<div style=\"font-size: 90%;\">\n";
         						  if($sm->get('config')['system']['debug_verbose']):

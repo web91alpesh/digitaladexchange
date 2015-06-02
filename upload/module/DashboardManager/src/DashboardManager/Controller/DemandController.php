@@ -28,10 +28,9 @@ class DemandController extends DemandAbstractActionController {
      * @see \Zend\Mvc\Controller\AbstractActionController::indexAction()
      */
 	public function indexAction() {
-
 		$initialized = $this->initialize();
 		if ($initialized !== true) return $initialized;
-
+		
 		$user_markup_rate = $this->config_handle['system']['default_demand_markup_rate'];
 		$campaign_markup_rate_list = array();
 
@@ -129,7 +128,9 @@ class DemandController extends DemandAbstractActionController {
 	    else:
 	   		$view->header_title = '&nbsp;';
 	    endif;
-
+		/*echo '<pre>';
+		print_r($view);
+		exit;*/
 	    return $view;
 	}
 

@@ -132,10 +132,10 @@ class PublisherAdZone extends \_factory\CachedTableRead
         	}
     	);
 
-    	    foreach ($resultSet as $obj):
+    	   	
+			foreach ($resultSet as $obj):
     	        $obj_list[] = $obj;
     	    endforeach;
-
     		return $obj_list;
     }
    

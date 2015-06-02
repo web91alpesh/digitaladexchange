@@ -155,8 +155,8 @@ return array(
             				),
             				'defaults' => array(
             						'__NAMESPACE__' => 'DashboardManager\Controller',
-            						'controller' => 'DashboardManager\Controller\Signup',
-            						'action'     => 'index',
+            						'controller' => 'DashboardManager\Controller\Auth',
+            						'action'     => 'login',
             				),
             		),
             ),
@@ -330,7 +330,7 @@ return array(
         'exception_template'       => 'error/index',
         'template_map' => array(
             'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
-            'application/index/index' => __DIR__ . '/../view/application/index/index.phtml',
+            'dashboard-manager/index/index' => __DIR__ . '/../view/dashboard-manager/index/index.phtml',
             'error/404'               => __DIR__ . '/../view/error/404.phtml',
             'unauthorized_template'   => __DIR__ . '/../view/error/403.phtml',
             'error/index'             => __DIR__ . '/../view/error/index.phtml',

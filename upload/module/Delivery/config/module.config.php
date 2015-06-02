@@ -7,8 +7,6 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
-
-
 return array(
     'router' => array(
         'routes' => array(
@@ -82,7 +80,7 @@ return array(
         'not_found_template'       => 'error/404',
         'exception_template'       => 'error/index',
         'template_map' => array(
-            'application/index/index' => __DIR__ . '/../view/application/index/index.phtml',
+            'delivery/index/index' => __DIR__ . '/../view/delivery/index/index.phtml',
             'error/404'               => __DIR__ . '/../view/error/404.phtml',
             'error/index'             => __DIR__ . '/../view/error/index.phtml',
         ),

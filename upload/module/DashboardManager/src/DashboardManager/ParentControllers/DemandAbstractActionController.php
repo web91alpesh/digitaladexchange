@@ -12,7 +12,6 @@ abstract class DemandAbstractActionController extends DashboardAbstractActionCon
      */
     protected function initialize()
     {
-    	
     	$is_preview = $this->getRequest()->getQuery('ispreview');
     	$this->preview_query = $is_preview == true ? "?ispreview=true" : "";
     	

@@ -7,7 +7,6 @@
  * @license GPLv3
  */
 $request_path = $_SERVER['REQUEST_URI'];
-
 $is_company = strpos(strtolower($request_path), "/company") === 0;
 $is_legal = strpos(strtolower($request_path), "/legal") === 0;
 $is_users = strpos(strtolower($request_path), "/users") === 0;

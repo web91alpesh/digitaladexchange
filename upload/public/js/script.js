@@ -1121,3 +1121,7 @@ function helpWindow(page, width, height) {
 	win.focus();
 	return false;
 }
+function AddBannerModal(param){
+	$("#AddBannerModal .msg").html(param);
+	$('#AddBannerModal').modal('show');
+}

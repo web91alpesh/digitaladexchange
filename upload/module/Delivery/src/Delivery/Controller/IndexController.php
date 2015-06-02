@@ -23,8 +23,7 @@ class IndexController extends AbstractActionController
 
     public function impressAction()
     {
-
-    	$banner_request 						= array();
+		$banner_request 						= array();
     	
     	$banner_request["demand_banner_id"] 	= $this->getRequest()->getQuery('zoneid');
     	$banner_request["publisher_banner_id"] 	= $this->getRequest()->getQuery('pzoneid');
@@ -49,11 +48,10 @@ class IndexController extends AbstractActionController
     	$banner_request["ui"] 					= $this->getRequest()->getQuery('ui');
     	
     	$config 								= $this->getServiceLocator()->get('Config');    	
-    	
+    	echo '<pre>';
     	/*
     	 * Validate that the banner_id is an integer before continuing
     	 */
-    	
     	if (isset($banner_request["dtrack"]) && $banner_request["dtrack"] == "true"):
     	
     		echo "dtrack";
@@ -61,24 +59,23 @@ class IndexController extends AbstractActionController
     	
     	elseif (isset($banner_request["vast"]) && $banner_request["vast"] == "tracker"):
     	
-    		$this->track_video_impression($config, $banner_request);
+    		$tag=$this->track_video_impression($config, $banner_request);
     	
     	elseif (intval($banner_request["demand_banner_id"])):
 	
-    		$this->process_demand_tag($config, $banner_request);
+    		$tag=$this->process_demand_tag($config, $banner_request);
 
     	elseif (intval($banner_request["publisher_banner_id"])):
     	
-    		$this->process_publisher_tag($config, $banner_request);
+    		$tag=$this->process_publisher_tag($config, $banner_request);
     	
     	endif; 
-
     	// default case:
     	// NO AD, HTML COMMENT WITH AD SERVER TAG
     	
     	if (isset($banner_request["video"]) && $banner_request["video"] == 'vast'):
     		header("Content-type: text/xml");
-    		echo '<?xml version="1.0" encoding="utf-8"?><VAST version="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="vast.xsd"><Ad id="NONDELIVERY"><InLine><AdSystem>NGINAD AD SERVER</AdSystem><AdTitle /><Impression></Impression><Creatives><Creative /></Creatives></InLine></Ad></VAST>';
+    		echo '<?xml version="1.0" encoding="utf-8"?><vast version="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="vast.xsd"><ad id="NONDELIVERY"><inline><adsystem>NGINAD AD SERVER</adsystem><adtitle /><impression></impression><creatives><creative /></creatives></inline></ad></vast>';
     	else:
     		echo "<!DOCTYPE html>\n<html><body><div style='margin: 0px; padding: 0px;'><!-- NGINAD AD SERVER - NO AD AVAILABLE --></div></body></html>\n";
         endif;
@@ -286,7 +283,7 @@ class IndexController extends AbstractActionController
 	 			if ($banner_request["ImpressionType"] == 'video'):
 		 			header("Content-type: text/xml");
 	 				if(\util\ParseHelper::isVastURL($winning_ad_tag) === true):
-	 					echo $this->get_vast_wrapper_xml($config, $winning_ad_tag, $tracker_url);
+						echo $this->get_vast_wrapper_xml($config, $winning_ad_tag, $tracker_url);
 	 				else:
 	 					echo $winning_ad_tag;
 	 				endif;
@@ -512,7 +509,8 @@ class IndexController extends AbstractActionController
     private function add_user_request_params($config, &$banner_request) {
     	
     	$ip_address = isset($_SERVER['HTTP_X_REAL_IP']) && !empty($_SERVER['HTTP_X_REAL_IP']) ? $_SERVER['HTTP_X_REAL_IP'] : $_SERVER["REMOTE_ADDR"];
-    	 
+    	 echo $ip_address;
+		 exit;
     	// to debug on dev
     	if (empty($ip_address)):
     		$ip_address = "127.0.0.1";
@@ -778,7 +776,6 @@ class IndexController extends AbstractActionController
     	$cache_buster = time();
     
     	$notice_tag = $delivery_adtag . "?vast=tracker&ap=" . $vast_auction_param . "&pp=" . $vast_publisher_param . "&cb=" . $cache_buster;
-    
     	return $notice_tag;
     }
     
@@ -804,37 +801,35 @@ class IndexController extends AbstractActionController
     }
     
     private function get_vast_wrapper_xml($config, $vast_url, $tracker_url) {
-    	
     	$delivery_adtag = $config['delivery']['url'];
-    	
     	$nl = "\n";
     	
     	$vast_wrapper_xml = '<?xml version="1.0" encoding="utf-8"?> ' . $nl
-    						. '<VAST version="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="vast.xsd"> ' . $nl
-    						. '	<Ad id="NginAdVideoAd">' . $nl
+    						. '<vast version="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="vast.xsd"> ' . $nl
+    						. '	<ad id="NginAdVideoAd">' . $nl
     						. '		<Wrapper>' . $nl
-    						. '			<AdSystem>NGINAD AD SERVER</AdSystem>' . $nl
+    						. '			<adsystem>NGINAD AD SERVER</adsystem>' . $nl
     						. '			<VASTAdTagURI><![CDATA[' . $vast_url . ']]></VASTAdTagURI>' . $nl;
     	
     	if (!empty($tracker_url)):
     	
-    		$vast_wrapper_xml.= '			<Impression><![CDATA[' . $tracker_url . ']]></Impression>' . $nl;
+    		$vast_wrapper_xml.= '			<impression><![CDATA[' . $tracker_url . ']]></impression>' . $nl;
     	
     	else:
     	
     		// dummy code for required field	
-    		$vast_wrapper_xml.= '			<Impression><![CDATA[' . $delivery_adtag . "?dtrack=true" . ']]></Impression>' . $nl;
+    		$vast_wrapper_xml.= '			<impression><![CDATA[' . $delivery_adtag . "?dtrack=true" . ']]></impression>' . $nl;
     	
     	endif;
     	
-    	$vast_wrapper_xml.= '			<Creatives>' . $nl
-    						. '				<Creative>' . $nl
-    						. '					<CompanionAds/>' . $nl
-    						. '				</Creative>' . $nl
-    						. '			</Creatives>' . $nl
+    	$vast_wrapper_xml.= '			<creatives>' . $nl
+    						. '				<creative>' . $nl
+    						. '					<companionads/>' . $nl
+    						. '				</creative>' . $nl
+    						. '			</creatives>' . $nl
     						. '		</Wrapper>' . $nl
-    						. '	</Ad>' . $nl
-    						. '</VAST>';
+    						. '	</ad>' . $nl
+    						. '</vast>';
     	
     	return $vast_wrapper_xml;
     }

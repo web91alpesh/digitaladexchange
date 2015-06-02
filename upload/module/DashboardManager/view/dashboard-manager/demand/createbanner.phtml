@@ -15,7 +15,6 @@ endif;
 
 $enddate = date('m/d/Y', time() + (86400 * 30));
 $minEndDate = explode("/", $enddate);
-
 $this->headScript()->captureStart() ?>
 
 $(function() {
@@ -82,7 +81,7 @@ $(function() {
 	<div class="form-group">
 	    <label for="startdate">Start Date</label>
         <div class="input-append date">
-		  <input name="startdate" id="startdate" class="txtbox-datepicker-width" size="16" type="text" value="<?php echo date('m/d/Y');?>" readonly="readonly" />
+		  <input name="startdate" id="startdate" class="txtbox-datepicker-width" size="16" type="text" value="<?php echo date('m/d/Y');?>" readonly />
 		  <span class="add-on" id="startdateicon"><i class="icon-calendar"></i></span>
 	   </div>
 	</div>
@@ -90,7 +89,7 @@ $(function() {
 	<div class="form-group">
 	    <label for="enddate">End Date</label>
         <div class="input-append date">
-		  <input name="enddate" id="enddate" class="txtbox-datepicker-width" size="16" type="text" value="<?php echo $enddate;?>" readonly="readonly" />
+		  <input name="enddate" id="enddate" class="txtbox-datepicker-width" size="16" type="text" value="<?php echo $enddate;?>" readonly />
 		  <span class="add-on" id="enddateicon"><i class="icon-calendar"></i></span>
 	   </div>
 	</div>
