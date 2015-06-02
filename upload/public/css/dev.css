@@ -1,0 +1,108 @@
+	.mt10{margin-top:10px;} 
+	.mt20{margin-top:20px;}
+	.mt30{margin-top:30px;}
+	.mt40{margin-top:40px;}
+	.mt50{margin-top:50px;}
+	
+	.mb10{margin-bottom:10px;}
+	.mb20{margin-bottom:20px;}
+	.mb30{margin-bottom:30px;}
+	.mb40{margin-bottom:40px;}
+	.mb50{margin-bottom:50px;}
+	
+	.footer .sep {
+		border-left: 2px solid black;
+		display: inline;
+		height: 10px;
+		margin: 0 10px;
+	}
+	.footer a{
+		color:#9a9a9a;
+		text-decoration:none;
+	}
+	.footer a:hover{
+		color:#FFF;
+		text-decoration:none;
+	}
+	.copy{
+		color:#FFF;
+	}
+	.bottom-container{
+		min-height:400px;
+	}
+	/*@media only screen and (min-device-height : 1024px){
+	.bottom-container{
+	min-height:800px;
+	}
+	}
+	@media only screen and (min-device-height : 1280px){
+	.bottom-container{
+	min-height:980px;
+	}
+	}*/
+@media only screen and (min-device-width : 768px){
+	.top{
+		line-height:90px;
+	}
+}
+@media only screen and (max-device-width : 360px){
+	.top{
+		line-height:40px;
+	}
+	#selection-results{
+		/*overflow:scroll !important;*/
+		overflow-x: scroll;
+		overflow-y: hidden;
+	}
+	.negative-margin{
+		margin-top:10px !important;
+	}
+}
+@media only screen and (max-device-width : 768px){
+	#selection-results{overflow:scroll !important;}
+}
+@media only screen and (max-device-width : 320px){
+	.top{
+		line-height:25px;
+	}
+	.negative-margin{
+		margin-top:10px !important;
+	}
+}
+	.navbar-fixed-top, .navbar-fixed-bottom{
+		position:relative;
+	}
+	.user{font-size:12px;}
+	.user a{
+		text-decoration:underline;
+	}
+	.user a:hover{
+		text-decoration:none;
+	}
+	.blue{color:#234567;}
+	.red{color:#c63f40;}
+	.navbar  .nav{
+		position:absolute;
+		margin:0px;
+		float:left;
+		/*top:5px;*/
+	}
+	.topmenu{
+		/*background-image: linear-gradient(to bottom, #2f6498, #254b71);*/
+		background-color:#537b9f;
+		/*width:100%;*/
+	}
+	.divider-vertical{
+		border-left: 1px solid #fff;
+		border-right: 1px solid #fff;
+	}
+	.rmm a:hover , .rmm a:focus{
+		background-color:transparent;
+		color:#fff;
+		text-decoration:none;
+	}
+	#report_list{
+		overflow-x: scroll;
+		overflow-y: hidden;
+	}
+	.btn-group{white-space:normal !important;}
